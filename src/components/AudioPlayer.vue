@@ -130,12 +130,6 @@ const playCurrentTrack = () => {
       <div v-else-if="techniquesStore.isLoading" class="technique-title">
         <div class="loading">Loading techniques...</div>
       </div>
-      <div v-else-if="techniquesStore.error" class="technique-title">
-        <div class="error">{{ techniquesStore.error }}</div>
-      </div>
-      <div v-else-if="playQueueStore.queue.length === 0" class="technique-title">
-        <div class="no-match">No techniques match current preferences</div>
-      </div>
       <!-- When queue exists but nothing played yet, show nothing -->
     </div>
     <div class="button-container">
@@ -269,17 +263,13 @@ const playCurrentTrack = () => {
   box-shadow: 0 0 0 3px rgba(82, 82, 82, 0.3);
 }
 
-/* Add styles for loading, error, and no-match states */
-.loading, .error, .no-match {
+/* Add styles for loading, error states */
+.loading, .error {
   color: #f7f7f7;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .error {
   color: #ff6b6b;
-}
-
-.no-match {
-  color: #ffa94d;
 }
 </style>

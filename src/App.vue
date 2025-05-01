@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MenuButton from './components/MenuButton.vue'
 import PreferencesMenu from './components/PreferencesMenu.vue'
+import NotificationDisplay from './components/NotificationDisplay.vue'
 
 // Define a type for the PreferencesMenu component instance with its exposed methods
 type PreferencesMenuInstance = {
@@ -49,6 +50,7 @@ const attemptClose = () => {
       @clickOutside="attemptClose"
       ref="preferencesMenu"
     />
+    <NotificationDisplay />
   </main>
 </template>
 

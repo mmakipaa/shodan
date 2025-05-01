@@ -2,7 +2,9 @@ import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useTechniquesStore } from './techniques'
 import { usePreferencesStore } from './preferences'
+import { useNotificationsStore } from './notifications'
 import type { Technique } from './techniques'
+import { filterTechniques as filterTechniquesUtil } from '../utils/filterTechniques'
 
 // Storage keys
 const QUEUE_STORAGE_KEY = 'shodan-playqueue'
@@ -17,6 +19,7 @@ interface StoredPlayState {
 export const usePlayQueueStore = defineStore('playQueue', () => {
   const techniquesStore = useTechniquesStore()
   const preferencesStore = usePreferencesStore()
+  const notificationsStore = useNotificationsStore()
   
   const queue = ref<Technique[]>([])
   const currentIndex = ref<number>(-1)
@@ -97,9 +100,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
 
   // Filter techniques based on current preferences
   const filterTechniques = (): Technique[] => {
-    return techniquesStore.techniques.filter(technique => 
-      preferencesStore.filterTechnique(technique)
-    )
+    return filterTechniquesUtil(techniquesStore.techniques, preferencesStore.preferences)
   }
 
   // Randomize array using Fisher-Yates shuffle algorithm
@@ -118,6 +119,13 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
     queue.value = shuffleArray(filteredTechniques)
     currentIndex.value = queue.value.length > 0 ? 0 : -1
     isPlaying.value = false
+    
+    // Show notification that the queue has been regenerated
+    if (queue.value.length > 0) {
+      notificationsStore.addNotification('Play queue has been refreshed', 'status', 'transient')
+    } else {
+      notificationsStore.addNotification('No techniques match current preferences', 'error', 'transient')
+    }
   }
 
   // Initialize the queue and state from localStorage or generate new ones

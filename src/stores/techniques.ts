@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useNotificationsStore } from './notifications'
 
 // Technique interfaces
 export interface Technique {
@@ -22,6 +23,7 @@ export const useTechniquesStore = defineStore('techniques', () => {
   const version = ref<number>(0)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
+  const notificationsStore = useNotificationsStore()
 
   // Load techniques data from JSON file
   const loadTechniques = async () => {
@@ -36,6 +38,8 @@ export const useTechniquesStore = defineStore('techniques', () => {
     } catch (err) {
       console.error('Failed to load techniques:', err)
       error.value = 'Failed to load techniques data'
+      // Show error notification
+      notificationsStore.addNotification('Failed to load techniques data', 'error', 'permanent')
     } finally {
       isLoading.value = false
     }

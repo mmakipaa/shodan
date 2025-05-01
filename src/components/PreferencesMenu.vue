@@ -16,8 +16,16 @@ const emit = defineEmits(['close', 'clickOutside'])
 // Get access to the preferences store
 const preferencesStore = usePreferencesStore()
 
-// Create local state for draft preferences
+// Create local state for draft preferences and initial preferences
 const draftPreferences = ref<AppPreferences>({
+  kyus: [] as KyuLevel[],
+  sources: [] as GradingSource[],
+  selectedKyus: [] as KyuLevel[],
+  selectedSource: 'aikikai',
+  includeOther: false
+})
+
+const initialPreferences = ref<AppPreferences>({
   kyus: [] as KyuLevel[],
   sources: [] as GradingSource[],
   selectedKyus: [] as KyuLevel[],
@@ -39,7 +47,9 @@ watch(() => props.isOpen, (isOpen) => {
 
 // Reset draft to current preferences
 const resetDraftToCurrentPreferences = () => {
+  // Create deep copies of the current preferences for both draft and initial state
   draftPreferences.value = JSON.parse(JSON.stringify(preferencesStore.preferences))
+  initialPreferences.value = JSON.parse(JSON.stringify(preferencesStore.preferences))
 }
 
 // Validation functions
@@ -49,21 +59,26 @@ const isValid = computed(() => {
 })
 
 const hasChanges = computed(() => {
-  const currentPrefs = preferencesStore.preferences
+  const initialPrefs = initialPreferences.value
   const draftPrefs = draftPreferences.value
   
   // Check if selected source changed
-  if (currentPrefs.selectedSource !== draftPrefs.selectedSource) return true
+  if (initialPrefs.selectedSource !== draftPrefs.selectedSource) return true
   
   // Check if includeOther changed
-  if (currentPrefs.includeOther !== draftPrefs.includeOther) return true
+  if (initialPrefs.includeOther !== draftPrefs.includeOther) return true
   
   // Check if selected kyus changed
-  if (currentPrefs.selectedKyus.length !== draftPrefs.selectedKyus.length) return true
+  if (initialPrefs.selectedKyus.length !== draftPrefs.selectedKyus.length) return true
   
-  // Check if any kyu value changed
-  for (const kyu of currentPrefs.selectedKyus) {
+  // Check if any kyu value changed (if any selected in initial state isn't in draft)
+  for (const kyu of initialPrefs.selectedKyus) {
     if (!draftPrefs.selectedKyus.includes(kyu)) return true
+  }
+  
+  // Also check if any kyu in draft isn't in initial (to cover all cases)
+  for (const kyu of draftPrefs.selectedKyus) {
+    if (!initialPrefs.selectedKyus.includes(kyu)) return true
   }
   
   return false
@@ -82,42 +97,21 @@ const toggleKyu = (kyu: KyuLevel) => {
     }
   }
   
-  // Apply changes if valid
-  if (isValid.value) {
-    applyChangesIfNeeded()
-  }
+  // Don't apply changes immediately, wait for menu closure
 }
 
 // Handle source selection
 const selectSource = (source: GradingSource) => {
   draftPreferences.value.selectedSource = source
   
-  // Apply changes if valid
-  if (isValid.value) {
-    applyChangesIfNeeded()
-  }
+  // Don't apply changes immediately, wait for menu closure
 }
 
 // Handle includeOther toggle
 const toggleIncludeOther = () => {
   draftPreferences.value.includeOther = !draftPreferences.value.includeOther
   
-  // Apply changes if valid
-  if (isValid.value) {
-    applyChangesIfNeeded()
-  }
-}
-
-// Apply changes if valid and has changes
-const applyChangesIfNeeded = () => {
-  if (!isValid.value) return
-  
-  if (hasChanges.value) {
-    // Update the preferences store
-    preferencesStore.updateSelectedKyus(draftPreferences.value.selectedKyus)
-    preferencesStore.updateSelectedSource(draftPreferences.value.selectedSource)
-    preferencesStore.setIncludeOther(draftPreferences.value.includeOther)
-  }
+  // Don't apply changes immediately, wait for menu closure
 }
 
 // Apply changes when menu is closed
@@ -125,10 +119,13 @@ const applyChanges = () => {
   if (!isValid.value) return
   
   if (hasChanges.value) {
-    // Update the preferences store
-    preferencesStore.updateSelectedKyus(draftPreferences.value.selectedKyus)
-    preferencesStore.updateSelectedSource(draftPreferences.value.selectedSource)
-    preferencesStore.setIncludeOther(draftPreferences.value.includeOther)
+    // Use batch update to apply all changes at once
+    // This prevents multiple reactive updates and reduces unwanted behavior
+    preferencesStore.batchUpdate({
+      selectedKyus: draftPreferences.value.selectedKyus,
+      selectedSource: draftPreferences.value.selectedSource,
+      includeOther: draftPreferences.value.includeOther
+    })
   }
   
   emit('close')

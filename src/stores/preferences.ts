@@ -1,6 +1,5 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
-import type { Technique } from './techniques'
 
 // Define types for preferences
 export type GradingSource = 'aikikai' | 'aikicircle'
@@ -140,29 +139,21 @@ export const usePreferencesStore = defineStore('preferences', () => {
     preferences.value = { ...DEFAULT_PREFERENCES }
   }
 
-  // Check if a technique should be included based on current preferences
-  const filterTechnique = (technique: Technique): boolean => {
-    // Check if the technique has a kyu value for the selected source
-    const selectedSourceKyuValue = technique[preferences.value.selectedSource]
-    
-    // Case 1: Include technique if it matches the selected source and kyu level
-    if (selectedSourceKyuValue !== undefined) {
-      return preferences.value.selectedKyus.includes(selectedSourceKyuValue as KyuLevel)
+  // Batch update preferences
+  const batchUpdate = (updates: Partial<AppPreferences>) => {
+    // Update all provided preference values in a single operation
+    // This helps prevent multiple watches from firing separately
+    if (updates.selectedKyus && updates.selectedKyus.length > 0) {
+      preferences.value.selectedKyus = [...updates.selectedKyus]
     }
     
-    // Case 2: Include technique if includeOther is true AND the technique doesn't have any source value
-    if (preferences.value.includeOther) {
-      // Check if the technique has ANY grading source defined
-      const hasAnyGradingSource = preferences.value.sources.some(source => 
-        technique[source] !== undefined
-      )
-      
-      // Include if it doesn't have any grading source defined
-      return !hasAnyGradingSource
+    if (updates.selectedSource && preferences.value.sources.includes(updates.selectedSource)) {
+      preferences.value.selectedSource = updates.selectedSource
     }
     
-    // If we get here, the technique doesn't match our criteria
-    return false
+    if (typeof updates.includeOther === 'boolean') {
+      preferences.value.includeOther = updates.includeOther
+    }
   }
 
   // Return all state and methods
@@ -173,7 +164,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
     updateSelectedSource,
     toggleIncludeOther,
     setIncludeOther,
-    filterTechnique,
-    resetToDefaults
+    resetToDefaults,
+    batchUpdate
   }
 })

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "techniques": [
+    {
+      "id": 1,
+      "filename": "jiyuwaza aihanmi katatedori monta.mp3",
+      "category": "jiyuwaza",
+      "attack": "aihanmi katatedori",
+      "aikicircle": 3
+    },
+    {
+      "id": 2,
+      "filename": "suwariwaza shomen uchi sotokaitennage.mp3",
+      "category": "suwariwaza",
+      "attack": "Shomen Uchi",
+      "technique": "sotokaitennage",
+      "aikikai": 1
+    },
+    {
+      "id": 3,
+      "filename": "tachiwaza katadori nikyo.mp3",
+      "category": "tachiwaza",
+      "attack": "katadori",
+      "technique": "nikyo",
+      "aikicircle": 3,
+      "aikikai": 1
+    },
+    {
+      "id": 4,
+      "filename": "tachiwaza morotedori kotegaeshi.mp3",
+      "category": "tachiwaza",
+      "attack": "morotedori",
+      "technique": "kotegaeshi"
+    },
+    {
+      "id": 5,
+      "filename": "tachiwaza shomen uchi nikyo.mp3",
+      "category": "tachiwaza",
+      "attack": "Shomen Uchi",
+      "technique": "nikyo",
+      "aikicircle": 3,
+      "aikikai": 4
+    },
+    {
+      "id": 6,
+      "filename": "tachiwaza_yodan_tsuki_uchikaitennage.mp3",
+      "category": "tachiwaza",
+      "attack": "yodan tsuki",
+      "technique": "uchikaitennage",
+      "aikikai": 1
+    }
+  ]
+} 

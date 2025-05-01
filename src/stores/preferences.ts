@@ -32,6 +32,15 @@ const DEFAULT_PREFERENCES: AppPreferences = {
   includeOther: false // Default to not include others
 }
 
+// Save preferences to localStorage
+const savePreferencesToStorage = (prefs: AppPreferences) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs))
+  } catch (error) {
+    console.error('Error saving preferences to localStorage:', error)
+  }
+}
+
 export const usePreferencesStore = defineStore('preferences', () => {
   // Initialize preferences from localStorage or use defaults
   const loadSavedPreferences = (): AppPreferences => {
@@ -48,14 +57,28 @@ export const usePreferencesStore = defineStore('preferences', () => {
       console.error('Error loading preferences from localStorage:', error)
     }
     
-    // Return default preferences if nothing valid was found
-    return { ...DEFAULT_PREFERENCES }
+    // If we reach here, we need to use the default preferences
+    // AND save them to localStorage immediately
+    const defaultPrefs = { ...DEFAULT_PREFERENCES }
+    savePreferencesToStorage(defaultPrefs)
+    
+    return defaultPrefs
   }
   
+  // Define a type for unknown preferences data (potentially from localStorage)
+  type UnknownPreferencesData = {
+    kyus?: unknown
+    sources?: unknown
+    selectedKyus?: unknown
+    selectedSource?: unknown
+    includeOther?: unknown
+  }
+
   // Validate loaded preferences
-  const isValidPreferences = (prefs: any): prefs is AppPreferences => {
+  const isValidPreferences = (prefs: UnknownPreferencesData): prefs is AppPreferences => {
     return (
-      prefs &&
+      prefs !== null &&
+      typeof prefs === 'object' &&
       Array.isArray(prefs.kyus) &&
       Array.isArray(prefs.sources) &&
       Array.isArray(prefs.selectedKyus) && 
@@ -72,11 +95,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
   watch(
     preferences,
     (newPreferences) => {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newPreferences))
-      } catch (error) {
-        console.error('Error saving preferences to localStorage:', error)
-      }
+      savePreferencesToStorage(newPreferences)
     },
     { deep: true }
   )

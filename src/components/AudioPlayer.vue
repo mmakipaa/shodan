@@ -122,10 +122,9 @@ const playCurrentTrack = () => {
     <div class="title-container">
       <!-- Display the displayed technique, not the current queue position -->
       <div class="technique-title" v-if="displayedTechnique">
-        <div class="category">{{ displayedTechnique.category }}</div>
-        <div class="details">{{ displayedTechnique.attack }}</div>
-        <div class="technique" v-if="displayedTechnique.technique">
-          {{ displayedTechnique.technique }}
+        <div class="technique-text">{{ displayedTechnique.category }}</div>
+        <div class="technique-text">
+          {{ displayedTechnique.attack }} {{ displayedTechnique.technique }}
         </div>
       </div>
       <div v-else-if="techniquesStore.isLoading" class="technique-title">
@@ -187,7 +186,7 @@ const playCurrentTrack = () => {
   border-radius: 8px;
 }
 
-.category, .details, .technique {
+.technique-text {
   text-transform: capitalize;
   width: 100%;
   white-space: normal;

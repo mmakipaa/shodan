@@ -1,0 +1,325 @@
+<script setup lang="ts">
+import { ref, computed, onMounted, watch, defineExpose } from 'vue'
+import { usePreferencesStore } from '../stores/preferences'
+import type { AppPreferences, GradingSource, KyuLevel } from '../stores/preferences'
+
+// Props and emits
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['close', 'clickOutside'])
+
+// Get access to the preferences store
+const preferencesStore = usePreferencesStore()
+
+// Create local state for draft preferences
+const draftPreferences = ref<AppPreferences>({
+  kyus: [] as KyuLevel[],
+  sources: [] as GradingSource[],
+  selectedKyus: [] as KyuLevel[],
+  selectedSource: 'aikikai',
+  includeOther: false
+})
+
+// Load initial preferences when mounted
+onMounted(() => {
+  resetDraftToCurrentPreferences()
+})
+
+// Watch for changes in isOpen prop to reset draft when menu opens
+watch(() => props.isOpen, (isOpen) => {
+  if (isOpen) {
+    resetDraftToCurrentPreferences()
+  }
+})
+
+// Reset draft to current preferences
+const resetDraftToCurrentPreferences = () => {
+  draftPreferences.value = JSON.parse(JSON.stringify(preferencesStore.preferences))
+}
+
+// Validation functions
+const isValid = computed(() => {
+  return draftPreferences.value.selectedKyus.length > 0 && 
+         draftPreferences.value.sources.includes(draftPreferences.value.selectedSource)
+})
+
+const hasChanges = computed(() => {
+  const currentPrefs = preferencesStore.preferences
+  const draftPrefs = draftPreferences.value
+  
+  // Check if selected source changed
+  if (currentPrefs.selectedSource !== draftPrefs.selectedSource) return true
+  
+  // Check if includeOther changed
+  if (currentPrefs.includeOther !== draftPrefs.includeOther) return true
+  
+  // Check if selected kyus changed
+  if (currentPrefs.selectedKyus.length !== draftPrefs.selectedKyus.length) return true
+  
+  // Check if any kyu value changed
+  for (const kyu of currentPrefs.selectedKyus) {
+    if (!draftPrefs.selectedKyus.includes(kyu)) return true
+  }
+  
+  return false
+})
+
+// Handle toggling kyu selection
+const toggleKyu = (kyu: KyuLevel) => {
+  const index = draftPreferences.value.selectedKyus.indexOf(kyu)
+  if (index === -1) {
+    // Add the kyu
+    draftPreferences.value.selectedKyus.push(kyu)
+  } else {
+    // Remove the kyu, but only if it wouldn't leave the selection empty
+    if (draftPreferences.value.selectedKyus.length > 1) {
+      draftPreferences.value.selectedKyus.splice(index, 1)
+    }
+  }
+  
+  // Apply changes if valid
+  if (isValid.value) {
+    applyChangesIfNeeded()
+  }
+}
+
+// Handle source selection
+const selectSource = (source: GradingSource) => {
+  draftPreferences.value.selectedSource = source
+  
+  // Apply changes if valid
+  if (isValid.value) {
+    applyChangesIfNeeded()
+  }
+}
+
+// Handle includeOther toggle
+const toggleIncludeOther = () => {
+  draftPreferences.value.includeOther = !draftPreferences.value.includeOther
+  
+  // Apply changes if valid
+  if (isValid.value) {
+    applyChangesIfNeeded()
+  }
+}
+
+// Apply changes if valid and has changes
+const applyChangesIfNeeded = () => {
+  if (!isValid.value) return
+  
+  if (hasChanges.value) {
+    // Update the preferences store
+    preferencesStore.updateSelectedKyus(draftPreferences.value.selectedKyus)
+    preferencesStore.updateSelectedSource(draftPreferences.value.selectedSource)
+    preferencesStore.setIncludeOther(draftPreferences.value.includeOther)
+  }
+}
+
+// Apply changes when menu is closed
+const applyChanges = () => {
+  if (!isValid.value) return
+  
+  if (hasChanges.value) {
+    // Update the preferences store
+    preferencesStore.updateSelectedKyus(draftPreferences.value.selectedKyus)
+    preferencesStore.updateSelectedSource(draftPreferences.value.selectedSource)
+    preferencesStore.setIncludeOther(draftPreferences.value.includeOther)
+  }
+  
+  emit('close')
+}
+
+// Handle click on backdrop
+const handleBackdropClick = (event: MouseEvent) => {
+  // Only close if clicking directly on the backdrop, not on the menu
+  if ((event.target as HTMLElement).classList.contains('backdrop')) {
+    emit('clickOutside')
+  }
+}
+
+// Expose methods to parent component
+defineExpose({
+  applyChanges
+})
+</script>
+
+<template>
+  <div 
+    v-if="isOpen" 
+    class="backdrop visible"
+    @click="handleBackdropClick"
+  >
+    <div 
+      class="preferences-menu"
+      :class="{ 'open': isOpen }"
+    >
+      <!-- Kyu Levels Selection -->
+      <div class="preference-section">
+        <h3>Kyu Levels</h3>
+        <div class="checkbox-group">
+          <div 
+            v-for="kyu in draftPreferences.kyus.slice().sort((a, b) => b - a)" 
+            :key="kyu" 
+            class="checkbox-item"
+          >
+            <label>
+              <input 
+                type="checkbox" 
+                :checked="draftPreferences.selectedKyus.includes(kyu)"
+                @change="toggleKyu(kyu)"
+              />
+              <span>{{ kyu }} kyu</span>
+            </label>
+          </div>
+        </div>
+        <div class="validation-message" v-if="draftPreferences.selectedKyus.length === 0">
+          Please select at least one kyu level
+        </div>
+      </div>
+      
+      <!-- Source Selection -->
+      <div class="preference-section">
+        <h3>Grading Source</h3>
+        <div class="radio-group">
+          <div 
+            v-for="source in draftPreferences.sources" 
+            :key="source" 
+            class="radio-item"
+          >
+            <label>
+              <input 
+                type="radio" 
+                :checked="draftPreferences.selectedSource === source"
+                @change="selectSource(source)"
+                :name="'source'"
+              />
+              <span>{{ source }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Include Other -->
+      <div class="preference-section">
+        <h3>Other Techniques</h3>
+        <div class="checkbox-item">
+          <label>
+            <input 
+              type="checkbox" 
+              :checked="draftPreferences.includeOther"
+              @change="toggleIncludeOther"
+            />
+            <span>Include other techniques</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(83, 83, 85, 0.5);
+  z-index: 900;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.backdrop.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.preferences-menu {
+  background-color: rgba(83, 83, 85, 0.9);
+  width: 280px;
+  height: 100%;
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  color: #f7f7f7;
+}
+
+.preferences-menu.open {
+  transform: translateX(0);
+}
+
+.preference-section {
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Fixed selectors to properly target all three sections */
+.open .preference-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* First preference section (Kyu Levels) */
+.open .preference-section:nth-of-type(1) {
+  transition-delay: 0.15s;
+}
+
+/* Second preference section (Grading Source) */
+.open .preference-section:nth-of-type(2) {
+  transition-delay: 0.2s;
+}
+
+/* Third preference section (Other Techniques) */
+.open .preference-section:nth-of-type(3) {
+  transition-delay: 0.25s;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #f7f7f7;
+  text-align: left;
+  padding-left: 0.5rem; /* Match the visual indent of the checkbox text */
+}
+
+.checkbox-group, .radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.checkbox-item, .radio-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-item label, .radio-item label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-item input, .radio-item input {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.validation-message {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+</style>

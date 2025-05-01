@@ -3,12 +3,14 @@ import { ref, onMounted, watch } from 'vue'
 import { useTechniquesStore } from '../stores/techniques'
 import { usePreferencesStore } from '../stores/preferences'
 import { usePlayQueueStore } from '../stores/playQueue'
+import { useNotificationsStore } from '../stores/notifications'
 import type { Technique } from '../stores/techniques'
 
 // Get store references
 const techniquesStore = useTechniquesStore()
 const preferencesStore = usePreferencesStore()
 const playQueueStore = usePlayQueueStore()
+const notificationsStore = useNotificationsStore()
 
 // Audio element reference
 const audioElement = ref<HTMLAudioElement | null>(null)
@@ -24,6 +26,15 @@ onMounted(async () => {
   // First, load techniques from JSON
   await techniquesStore.loadTechniques()
   
+  // Check if we have a new version and show notification if needed
+  if (techniquesStore.isNewVersion) {
+    notificationsStore.addNotification(
+      'New techniques data version detected. Your settings have been updated.',
+      'status',
+      'transient'
+    )
+  }
+  
   // Initialize audio element
   audioElement.value = new Audio()
   
@@ -31,15 +42,27 @@ onMounted(async () => {
   if (audioElement.value) {
     // When audio ends, automatically move to the next track
     audioElement.value.onended = () => {
-      playQueueStore.setPlaying(false)
-      
-      // Advance to the next track
-      const nextTrack = playQueueStore.nextTrack()
-      
-      // If we reached the end and need to generate a new queue
-      if (!nextTrack) {
-        playQueueStore.generateQueue()
+      try {
+        playQueueStore.setPlaying(false)
+        
+        // Advance to the next track
+        const nextTrack = playQueueStore.nextTrack()
+        
+        // If we reached the end and need to generate a new queue
+        if (!nextTrack) {
+          playQueueStore.generateQueue()
+        }
+      } catch (error) {
+        console.error('Error handling track end:', error)
+        notificationsStore.addNotification('Error advancing to next track', 'error', 'transient')
       }
+    }
+
+    // Add error event handler
+    audioElement.value.onerror = () => {
+      console.error('Audio element error:', audioElement.value?.error)
+      notificationsStore.addNotification('Audio file could not be loaded', 'error', 'transient')
+      playQueueStore.setPlaying(false)
     }
   }
   
@@ -113,6 +136,7 @@ const playCurrentTrack = () => {
     .catch(error => {
       console.error('Error playing audio:', error)
       playQueueStore.setPlaying(false)
+      notificationsStore.addNotification('Unable to play audio file', 'error', 'transient')
     })
 }
 </script>

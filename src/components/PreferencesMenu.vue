@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, defineExpose } from 'vue'
 import { usePreferencesStore } from '../stores/preferences'
+import { useTechniquesStore } from '../stores/techniques'
+import { useNotificationsStore } from '../stores/notifications'
+import { filterTechniques } from '../utils/filterTechniques'
 import type { AppPreferences, GradingSource, KyuLevel } from '../stores/preferences'
 
 // Props and emits
@@ -15,6 +18,8 @@ const emit = defineEmits(['close', 'clickOutside'])
 
 // Get access to the preferences store
 const preferencesStore = usePreferencesStore()
+const techniquesStore = useTechniquesStore()
+const notificationsStore = useNotificationsStore()
 
 // Create local state for draft preferences and initial preferences
 const draftPreferences = ref<AppPreferences>({
@@ -54,8 +59,7 @@ const resetDraftToCurrentPreferences = () => {
 
 // Validation functions
 const isValid = computed(() => {
-  return draftPreferences.value.selectedKyus.length > 0 && 
-         draftPreferences.value.sources.includes(draftPreferences.value.selectedSource)
+  return draftPreferences.value.sources.includes(draftPreferences.value.selectedSource)
 })
 
 const hasChanges = computed(() => {
@@ -91,10 +95,8 @@ const toggleKyu = (kyu: KyuLevel) => {
     // Add the kyu
     draftPreferences.value.selectedKyus.push(kyu)
   } else {
-    // Remove the kyu, but only if it wouldn't leave the selection empty
-    if (draftPreferences.value.selectedKyus.length > 1) {
-      draftPreferences.value.selectedKyus.splice(index, 1)
-    }
+    // Remove the kyu without restriction
+    draftPreferences.value.selectedKyus.splice(index, 1)
   }
   
   // Don't apply changes immediately, wait for menu closure
@@ -118,6 +120,15 @@ const toggleIncludeOther = () => {
 const applyChanges = () => {
   if (!isValid.value) return
   
+  // Check if the current draft preferences would result in zero techniques
+  const filteredTechniques = filterTechniques(techniquesStore.techniques, draftPreferences.value)
+  
+  // If no techniques would be found, show an error notification and prevent closing
+  if (filteredTechniques.length === 0) {
+    notificationsStore.addNotification('Your selection would result in zero techniques. Please adjust your preferences.', 'error', 'transient')
+    return
+  }
+  
   if (hasChanges.value) {
     // Use batch update to apply all changes at once
     // This prevents multiple reactive updates and reduces unwanted behavior
@@ -130,6 +141,24 @@ const applyChanges = () => {
   
   emit('close')
 }
+
+// Watch for changes in draftPreferences to check if selection would result in zero techniques
+watch(
+  draftPreferences,
+  (newDraftPreferences) => {
+    // Only run the check if the menu is open and the selection is valid
+    if (props.isOpen && isValid.value) {
+      // Use the utility function to check if any techniques would be selected with current draft preferences
+      const filteredTechniques = filterTechniques(techniquesStore.techniques, newDraftPreferences)
+      
+      // If no techniques would be found, show a notification
+      if (filteredTechniques.length === 0) {
+        notificationsStore.addNotification('No techniques match your current selection', 'status', 'transient')
+      }
+    }
+  },
+  { deep: true } // Watch for deep changes in the draftPreferences object
+)
 
 // Handle click on backdrop
 const handleBackdropClick = (event: MouseEvent) => {
@@ -155,7 +184,7 @@ defineExpose({
       class="preferences-menu"
       :class="{ 'open': isOpen }"
     >
-      <!-- Kyu Levels Selection -->
+      <!-- Kyu Levels Selection (with Other) -->
       <div class="preference-section">
         <h3>Kyu Levels</h3>
         <div class="checkbox-group">
@@ -173,9 +202,17 @@ defineExpose({
               <span>{{ kyu }} kyu</span>
             </label>
           </div>
-        </div>
-        <div class="validation-message" v-if="draftPreferences.selectedKyus.length === 0">
-          Please select at least one kyu level
+          <!-- Other techniques option added to kyu levels group -->
+          <div class="checkbox-item other-option">
+            <label>
+              <input 
+                type="checkbox" 
+                :checked="draftPreferences.includeOther"
+                @change="toggleIncludeOther"
+              />
+              <span>Other</span>
+            </label>
+          </div>
         </div>
       </div>
       
@@ -198,21 +235,6 @@ defineExpose({
               <span>{{ source }}</span>
             </label>
           </div>
-        </div>
-      </div>
-      
-      <!-- Include Other -->
-      <div class="preference-section">
-        <h3>Other Techniques</h3>
-        <div class="checkbox-item">
-          <label>
-            <input 
-              type="checkbox" 
-              :checked="draftPreferences.includeOther"
-              @change="toggleIncludeOther"
-            />
-            <span>Include other techniques</span>
-          </label>
         </div>
       </div>
     </div>
@@ -279,17 +301,11 @@ defineExpose({
   transition-delay: 0.2s;
 }
 
-/* Third preference section (Other Techniques) */
-.open .preference-section:nth-of-type(3) {
-  transition-delay: 0.25s;
-}
-
 h3 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
   color: #f7f7f7;
   text-align: left;
-  padding-left: 0.5rem; /* Match the visual indent of the checkbox text */
 }
 
 .checkbox-group, .radio-group {
@@ -301,6 +317,10 @@ h3 {
 .checkbox-item, .radio-item {
   display: flex;
   align-items: center;
+}
+
+.checkbox-item.other-option {
+  margin-top: 0.5rem; /* Small spacing to visually separate "Other" from kyu levels */
 }
 
 .checkbox-item label, .radio-item label {

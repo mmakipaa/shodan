@@ -1,5 +1,6 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
+import { useNotificationsStore } from './notifications'
 
 // Define types for preferences
 export type GradingSource = 'aikikai' | 'aikicircle'
@@ -31,18 +32,21 @@ const DEFAULT_PREFERENCES: AppPreferences = {
   includeOther: false // Default to not include others
 }
 
-// Save preferences to localStorage
-const savePreferencesToStorage = (prefs: AppPreferences) => {
+// Export these functions for the storage recovery mechanism
+export const savePreferencesToStorage = (prefs: AppPreferences) => {
+  const notificationsStore = useNotificationsStore()
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs))
   } catch (error) {
     console.error('Error saving preferences to localStorage:', error)
+    notificationsStore.addNotification('Failed to save preferences to storage', 'error', 'transient')
   }
 }
 
 export const usePreferencesStore = defineStore('preferences', () => {
   // Initialize preferences from localStorage or use defaults
   const loadSavedPreferences = (): AppPreferences => {
+    const notificationsStore = useNotificationsStore()
     try {
       const savedPreferences = localStorage.getItem(STORAGE_KEY)
       if (savedPreferences) {
@@ -54,6 +58,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
       }
     } catch (error) {
       console.error('Error loading preferences from localStorage:', error)
+      notificationsStore.addNotification('Failed to load preferences from storage', 'error', 'transient')
     }
     
     // If we reach here, we need to use the default preferences
@@ -81,7 +86,6 @@ export const usePreferencesStore = defineStore('preferences', () => {
       Array.isArray(prefs.kyus) &&
       Array.isArray(prefs.sources) &&
       Array.isArray(prefs.selectedKyus) && 
-      prefs.selectedKyus.length > 0 &&
       typeof prefs.selectedSource === 'string' &&
       typeof prefs.includeOther === 'boolean'
     )
@@ -101,19 +105,13 @@ export const usePreferencesStore = defineStore('preferences', () => {
 
   // Computed property to check if preferences are valid
   const isValid = computed(() => {
-    return preferences.value.selectedKyus.length > 0 && 
-           preferences.value.sources.includes(preferences.value.selectedSource)
+    return preferences.value.sources.includes(preferences.value.selectedSource)
   })
 
   // Update selected kyus
   const updateSelectedKyus = (kyus: KyuLevel[]) => {
-    // Ensure at least one kyu is selected
-    if (kyus.length === 0) return
-    
     // Make sure all selected kyus are valid
     const validKyus = kyus.filter(kyu => preferences.value.kyus.includes(kyu))
-    if (validKyus.length === 0) return
-    
     preferences.value.selectedKyus = validKyus
   }
 
@@ -143,7 +141,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
   const batchUpdate = (updates: Partial<AppPreferences>) => {
     // Update all provided preference values in a single operation
     // This helps prevent multiple watches from firing separately
-    if (updates.selectedKyus && updates.selectedKyus.length > 0) {
+    if (updates.selectedKyus !== undefined) {
       preferences.value.selectedKyus = [...updates.selectedKyus]
     }
     

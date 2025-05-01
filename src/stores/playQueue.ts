@@ -45,6 +45,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       }
     } catch (error) {
       console.error('Error loading queue from localStorage:', error)
+      notificationsStore.addNotification('Failed to load queue from storage', 'error', 'transient')
     }
     
     return []
@@ -63,6 +64,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       }
     } catch (error) {
       console.error('Error loading play state from localStorage:', error)
+      notificationsStore.addNotification('Failed to load play state from storage', 'error', 'transient')
     }
     
     return { currentIndex: -1, isPlaying: false }
@@ -76,6 +78,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(ids))
     } catch (error) {
       console.error('Error saving queue to localStorage:', error)
+      notificationsStore.addNotification('Failed to save queue state to storage', 'error', 'transient')
     }
   }
 
@@ -89,6 +92,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       localStorage.setItem(PLAYSTATE_STORAGE_KEY, JSON.stringify(state))
     } catch (error) {
       console.error('Error saving play state to localStorage:', error)
+      notificationsStore.addNotification('Failed to save queue state to storage', 'error', 'transient')
     }
   }
 

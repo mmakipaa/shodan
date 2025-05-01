@@ -2,6 +2,9 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useNotificationsStore } from './notifications'
 
+// Local storage key for storing version
+const VERSION_STORAGE_KEY = 'shodan-techniques-version'
+
 // Technique interfaces
 export interface Technique {
   id: number
@@ -24,6 +27,24 @@ export const useTechniquesStore = defineStore('techniques', () => {
   const isLoading = ref(false)
   const error = ref<string | null>(null)
   const notificationsStore = useNotificationsStore()
+  const isNewVersion = ref(false)
+
+  // Get stored version from local storage
+  const getStoredVersion = (): number | null => {
+    const storedVersion = localStorage.getItem(VERSION_STORAGE_KEY)
+    return storedVersion ? parseInt(storedVersion, 10) : null
+  }
+
+  // Save version to local storage
+  const saveVersionToStorage = (versionNumber: number) => {
+    localStorage.setItem(VERSION_STORAGE_KEY, versionNumber.toString())
+  }
+
+  // Check if current version is newer than stored version
+  const checkForNewVersion = (currentVersion: number): boolean => {
+    const storedVersion = getStoredVersion()
+    return storedVersion !== null && currentVersion > storedVersion
+  }
 
   // Load techniques data from JSON file
   const loadTechniques = async () => {
@@ -35,6 +56,12 @@ export const useTechniquesStore = defineStore('techniques', () => {
       const data = await response.json() as TechniquesData
       techniques.value = data.techniques
       version.value = data.version
+      
+      // Check if this is a new version
+      isNewVersion.value = checkForNewVersion(data.version)
+      
+      // Save current version to local storage
+      saveVersionToStorage(data.version)
     } catch (err) {
       console.error('Failed to load techniques:', err)
       error.value = 'Failed to load techniques data'
@@ -54,7 +81,8 @@ export const useTechniquesStore = defineStore('techniques', () => {
     techniques,
     version, 
     isLoading, 
-    error, 
+    error,
+    isNewVersion,
     loadTechniques, 
     getTechniqueById
   }

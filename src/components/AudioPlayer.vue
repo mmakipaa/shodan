@@ -12,6 +12,9 @@ const preferencesStore = usePreferencesStore()
 const playQueueStore = usePlayQueueStore()
 const notificationsStore = useNotificationsStore()
 
+// Get the base URL from import.meta.env for asset loading
+const baseUrl = import.meta.env.BASE_URL || '/'
+
 // Audio element reference
 const audioElement = ref<HTMLAudioElement | null>(null)
 
@@ -74,7 +77,7 @@ onMounted(async () => {
   if (initialized && playQueueStore.currentTechnique) {
     // Preload the audio source without playing
     if (audioElement.value) {
-      audioElement.value.src = `/audio/${playQueueStore.currentTechnique.filename}`
+      audioElement.value.src = `${baseUrl}audio/${playQueueStore.currentTechnique.filename}`
     }
     
     // Do not set displayedTechnique here - we want it to start null
@@ -96,7 +99,7 @@ watch(
     
     // Preload the new audio source
     if (audioElement.value && playQueueStore.currentTechnique) {
-      audioElement.value.src = `/audio/${playQueueStore.currentTechnique.filename}`
+      audioElement.value.src = `${baseUrl}audio/${playQueueStore.currentTechnique.filename}`
     }
     
     // Reset displayed technique when preferences change
@@ -125,7 +128,7 @@ const playCurrentTrack = () => {
   
   // Set the source of the audio element if not already set
   if (!audioElement.value.src || !audioElement.value.src.includes(playQueueStore.currentTechnique.filename)) {
-    audioElement.value.src = `/audio/${playQueueStore.currentTechnique.filename}`
+    audioElement.value.src = `${baseUrl}audio/${playQueueStore.currentTechnique.filename}`
   }
   
   // Play the audio

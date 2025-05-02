@@ -5,6 +5,9 @@ import { useNotificationsStore } from './notifications'
 // Local storage key for storing version
 const VERSION_STORAGE_KEY = 'shodan-techniques-version'
 
+// Get the base URL from import.meta.env for asset loading
+const baseUrl = import.meta.env.BASE_URL || '/'
+
 // Technique interfaces
 export interface Technique {
   id: number
@@ -52,17 +55,20 @@ export const useTechniquesStore = defineStore('techniques', () => {
     error.value = null
 
     try {
-      const response = await fetch('/data/techniques.json')
+      // Use baseUrl to construct the correct path in any environment
+      const response = await fetch(`${baseUrl}data/techniques.json`)
       const data = await response.json() as TechniquesData
       techniques.value = data.techniques
       version.value = data.version
+      
+      // Get the stored version for logging purposes
+      const storedVersion = getStoredVersion()
       
       // Check if this is a new version
       isNewVersion.value = checkForNewVersion(data.version)
       
       // Log when version has changed
       if (isNewVersion.value) {
-        const storedVersion = getStoredVersion()
         console.log(`Techniques version changed: ${storedVersion} → ${data.version}`)
       }
       

@@ -36,7 +36,7 @@ defineEmits(['toggle'])
   width: 6vmin;
   height: 6vmin;
   background: rgba(116, 116, 118, 0.9);
-  border: 2px solid #d94701;
+  border: 2px solid #a63603;
   border-radius: 8px; /* Square with rounded corners instead of circle */
   z-index: 1000;
   cursor: pointer;

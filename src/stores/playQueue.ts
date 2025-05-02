@@ -10,10 +10,10 @@ import { filterTechniques as filterTechniquesUtil } from '../utils/filterTechniq
 const QUEUE_STORAGE_KEY = 'shodan-playqueue'
 const PLAYSTATE_STORAGE_KEY = 'shodan-playstate'
 
-// Defines what we store in localStorage
+// Defines what we store in localStorage - only the current index
+// We don't need to store isPlaying since we always start paused
 interface StoredPlayState {
   currentIndex: number
-  isPlaying: boolean
 }
 
 export const usePlayQueueStore = defineStore('playQueue', () => {
@@ -58,8 +58,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       if (savedState) {
         const state = JSON.parse(savedState) as StoredPlayState
         return {
-          currentIndex: typeof state.currentIndex === 'number' ? state.currentIndex : -1,
-          isPlaying: false // Always start paused even if it was playing when the user left
+          currentIndex: typeof state.currentIndex === 'number' ? state.currentIndex : -1
         }
       }
     } catch (error) {
@@ -67,7 +66,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       notificationsStore.addNotification('Failed to load play state from storage', 'error', 'transient')
     }
     
-    return { currentIndex: -1, isPlaying: false }
+    return { currentIndex: -1 }
   }
 
   // Save queue to localStorage
@@ -86,8 +85,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
   const savePlayState = () => {
     try {
       const state: StoredPlayState = {
-        currentIndex: currentIndex.value,
-        isPlaying: false // Always save as not playing since we don't pause tracks
+        currentIndex: currentIndex.value
       }
       localStorage.setItem(PLAYSTATE_STORAGE_KEY, JSON.stringify(state))
     } catch (error) {
@@ -118,7 +116,7 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
   }
 
   // Generate a new play queue by filtering and randomizing techniques
-  const generateQueue = () => {
+  const generateQueue = (): boolean => {
     const filteredTechniques = filterTechniques()
     queue.value = shuffleArray(filteredTechniques)
     currentIndex.value = queue.value.length > 0 ? 0 : -1
@@ -126,19 +124,33 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
     
     // Show notification that the queue has been regenerated
     if (queue.value.length > 0) {
-      notificationsStore.addNotification('Play queue has been refreshed', 'status', 'transient')
+      notificationsStore.addNotification(
+        `Play queue has been refreshed with ${queue.value.length} techniques`,
+        'status',
+        'transient'
+      )
     } else {
       notificationsStore.addNotification('No techniques match current preferences', 'error', 'transient')
     }
+    
+    // Return true if we successfully created a queue with techniques
+    return queue.value.length > 0
   }
 
   // Initialize the queue and state from localStorage or generate new ones
-  const initializeQueue = () => {
+  const initializeQueue = (forceRegenerate = false): boolean => {
     // Don't try to load if techniques aren't loaded yet
     if (techniquesStore.techniques.length === 0) {
       return false
     }
     
+    // If forced regeneration is requested, generate a new queue instead of loading from localStorage
+    if (forceRegenerate) {
+      console.log('Queue regeneration requested, creating fresh play queue')
+      return generateQueue()
+    }
+    
+    // Normal flow - try to load queue from localStorage
     const savedQueue = loadSavedQueue()
     const savedState = loadPlayState()
     
@@ -147,17 +159,21 @@ export const usePlayQueueStore = defineStore('playQueue', () => {
       
       // Make sure the index is valid for the loaded queue
       if (savedState.currentIndex >= 0 && savedState.currentIndex < savedQueue.length) {
+        // Use the saved current index if it's valid
         currentIndex.value = savedState.currentIndex
+      } else if (savedState.currentIndex >= savedQueue.length) {
+        // If the saved index is beyond the queue length, set to the last item
+        currentIndex.value = savedQueue.length - 1
       } else {
+        // If the saved index is negative or invalid, reset to 0
         currentIndex.value = 0
       }
-      
+
       isPlaying.value = false // Always start not playing
       return true
     } else {
       // No valid saved queue, generate a new one
-      generateQueue()
-      return queue.value.length > 0
+      return generateQueue()
     }
   }
 

@@ -23,17 +23,8 @@ const goldenRatio = 0.618
 
 // Load data and initialize components
 onMounted(async () => {
-  // First, load techniques from JSON
-  await techniquesStore.loadTechniques()
-  
-  // Check if we have a new version and show notification if needed
-  if (techniquesStore.isNewVersion) {
-    notificationsStore.addNotification(
-      'New techniques data version detected. Your settings have been updated.',
-      'status',
-      'transient'
-    )
-  }
+  // First, load techniques from JSON and get whether there's a new version
+  const hasNewVersion = await techniquesStore.loadTechniques()
   
   // Initialize audio element
   audioElement.value = new Audio()
@@ -66,9 +57,18 @@ onMounted(async () => {
     }
   }
   
-  // After techniques are loaded, initialize the play queue from localStorage
-  // or generate a new one if nothing is saved
-  const initialized = playQueueStore.initializeQueue()
+  // After techniques are loaded, initialize the play queue
+  // If there's a new version, show notification and force queue regeneration
+  if (hasNewVersion) {
+    notificationsStore.addNotification(
+      'New techniques data file version detected.',
+      'status',
+      'transient'
+    )
+  }
+  
+  // Initialize queue, regenerating if we have a new version
+  const initialized = playQueueStore.initializeQueue(hasNewVersion)
   
   // If we have a current track and techniques were loaded successfully, prepare it
   if (initialized && playQueueStore.currentTechnique) {
@@ -236,7 +236,7 @@ const playCurrentTrack = () => {
   min-height: 28vmin; /* Enforce minimum height */
   border-radius: 50%;
   background: rgba(116, 116, 118, 0.9);
-  border: 3px solid #d94701;  /* Increased from 2px to 3px */
+  border: 3px solid #a63603;  /* Increased from 2px to 3px */
   cursor: pointer;
   display: flex;
   align-items: center;

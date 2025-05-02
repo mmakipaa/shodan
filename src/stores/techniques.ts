@@ -47,7 +47,7 @@ export const useTechniquesStore = defineStore('techniques', () => {
   }
 
   // Load techniques data from JSON file
-  const loadTechniques = async () => {
+  const loadTechniques = async (): Promise<boolean> => {
     isLoading.value = true
     error.value = null
 
@@ -60,13 +60,23 @@ export const useTechniquesStore = defineStore('techniques', () => {
       // Check if this is a new version
       isNewVersion.value = checkForNewVersion(data.version)
       
+      // Log when version has changed
+      if (isNewVersion.value) {
+        const storedVersion = getStoredVersion()
+        console.log(`Techniques version changed: ${storedVersion} → ${data.version}`)
+      }
+      
       // Save current version to local storage
       saveVersionToStorage(data.version)
+      
+      // Return whether this is a new version
+      return isNewVersion.value
     } catch (err) {
       console.error('Failed to load techniques:', err)
       error.value = 'Failed to load techniques data'
       // Show error notification
       notificationsStore.addNotification('Failed to load techniques data', 'error', 'permanent')
+      return false
     } finally {
       isLoading.value = false
     }

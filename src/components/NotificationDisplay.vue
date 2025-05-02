@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 }
 
 .notification-content {
-  color: white;
+  color: #f7f7f7;
   word-break: break-word;
   max-width: 90%;
   margin: 0 auto;
@@ -54,11 +54,11 @@ onBeforeUnmount(() => {
 
 /* Notification types */
 .notification-container.status {
-  background-color: rgba(0, 122, 255, 0.95); /* Blue background for status */
+  background-color: rgba(8, 81, 156, 0.95); /* Blue background for status */
 }
 
 .notification-container.error {
-  background-color: rgba(255, 59, 48, 0.95); /* Red background for errors */
+  background-color: rgba(165, 15, 21, 0.95); /* Red background for errors */
 }
 
 /* Animation for notification entry and exit */

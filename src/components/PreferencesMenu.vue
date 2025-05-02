@@ -4,7 +4,7 @@ import { usePreferencesStore } from '../stores/preferences'
 import { useTechniquesStore } from '../stores/techniques'
 import { useNotificationsStore } from '../stores/notifications'
 import { filterTechniques } from '../utils/filterTechniques'
-import type { AppPreferences, GradingSource, KyuLevel } from '../stores/preferences'
+import type { AppPreferences, UserPreferences, GradingSource, KyuLevel } from '../stores/preferences'
 
 // Props and emits
 const props = defineProps({
@@ -130,13 +130,17 @@ const applyChanges = () => {
   }
   
   if (hasChanges.value) {
-    // Use batch update to apply all changes at once
-    // This prevents multiple reactive updates and reduces unwanted behavior
-    preferencesStore.batchUpdate({
+    // Create a UserPreferences object from the draft preferences
+    // Only including the user-selected values that need to be persisted
+    const userPrefs: UserPreferences = {
       selectedKyus: draftPreferences.value.selectedKyus,
       selectedSource: draftPreferences.value.selectedSource,
       includeOther: draftPreferences.value.includeOther
-    })
+    }
+    
+    // Use batch update to apply all changes at once
+    // This prevents multiple reactive updates and reduces unwanted behavior
+    preferencesStore.batchUpdate(userPrefs)
   }
   
   emit('close')

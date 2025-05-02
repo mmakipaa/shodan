@@ -17,26 +17,48 @@ export interface AppPreferences {
   includeOther: boolean
 }
 
+// Define what we actually need to store in localStorage (user selections only)
+export interface UserPreferences {
+  selectedKyus: KyuLevel[]
+  selectedSource: GradingSource
+  includeOther: boolean
+}
+
 // Storage key for preferences
 const STORAGE_KEY = 'shodan-preferences'
 
+// Available options
+const AVAILABLE_KYUS: KyuLevel[] = [6, 5, 4, 3, 2, 1]
+const AVAILABLE_SOURCES: GradingSource[] = ['aikikai', 'aikicircle']
+
 // Default preferences when nothing is stored
-const DEFAULT_PREFERENCES: AppPreferences = {
-  // Available options
-  kyus: [6, 5, 4, 3, 2, 1],
-  sources: ['aikikai', 'aikicircle'],
-  
-  // Default selections
+const DEFAULT_USER_PREFERENCES: UserPreferences = {
   selectedKyus: [6, 5, 4, 3, 2, 1], // All kyu levels selected
   selectedSource: 'aikikai', // Default source
   includeOther: false // Default to not include others
 }
 
-// Export these functions for the storage recovery mechanism
-export const savePreferencesToStorage = (prefs: AppPreferences) => {
+// Default full preferences
+const DEFAULT_PREFERENCES: AppPreferences = {
+  // Available options
+  kyus: AVAILABLE_KYUS,
+  sources: AVAILABLE_SOURCES,
+  
+  // Default selections (from user preferences)
+  ...DEFAULT_USER_PREFERENCES
+}
+
+// Save preferences to localStorage
+const savePreferencesToStorage = (prefs: AppPreferences) => {
   const notificationsStore = useNotificationsStore()
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs))
+    // Only save the user preferences, not the available options
+    const userPrefs: UserPreferences = {
+      selectedKyus: prefs.selectedKyus,
+      selectedSource: prefs.selectedSource,
+      includeOther: prefs.includeOther
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userPrefs))
   } catch (error) {
     console.error('Error saving preferences to localStorage:', error)
     notificationsStore.addNotification('Failed to save preferences to storage', 'error', 'transient')
@@ -50,10 +72,21 @@ export const usePreferencesStore = defineStore('preferences', () => {
     try {
       const savedPreferences = localStorage.getItem(STORAGE_KEY)
       if (savedPreferences) {
-        const parsed = JSON.parse(savedPreferences) as AppPreferences
-        // Validate the loaded preferences
-        if (isValidPreferences(parsed)) {
-          return parsed
+        const parsed = JSON.parse(savedPreferences) as Partial<UserPreferences>
+        
+        // Validate the loaded user preferences
+        if (isValidUserPreferences(parsed)) {
+          // Return full app preferences with loaded user preferences
+          return {
+            // Always use the application-defined available options
+            kyus: AVAILABLE_KYUS,
+            sources: AVAILABLE_SOURCES,
+            
+            // Use the persisted user preferences
+            selectedKyus: parsed.selectedKyus,
+            selectedSource: parsed.selectedSource,
+            includeOther: parsed.includeOther
+          }
         }
       }
     } catch (error) {
@@ -63,28 +96,23 @@ export const usePreferencesStore = defineStore('preferences', () => {
     
     // If we reach here, we need to use the default preferences
     // AND save them to localStorage immediately
-    const defaultPrefs = { ...DEFAULT_PREFERENCES }
-    savePreferencesToStorage(defaultPrefs)
+    savePreferencesToStorage(DEFAULT_PREFERENCES)
     
-    return defaultPrefs
+    return { ...DEFAULT_PREFERENCES }
   }
   
   // Define a type for unknown preferences data (potentially from localStorage)
   type UnknownPreferencesData = {
-    kyus?: unknown
-    sources?: unknown
     selectedKyus?: unknown
     selectedSource?: unknown
     includeOther?: unknown
   }
 
-  // Validate loaded preferences
-  const isValidPreferences = (prefs: UnknownPreferencesData): prefs is AppPreferences => {
+  // Validate loaded user preferences
+  const isValidUserPreferences = (prefs: UnknownPreferencesData): prefs is UserPreferences => {
     return (
       prefs !== null &&
       typeof prefs === 'object' &&
-      Array.isArray(prefs.kyus) &&
-      Array.isArray(prefs.sources) &&
       Array.isArray(prefs.selectedKyus) && 
       typeof prefs.selectedSource === 'string' &&
       typeof prefs.includeOther === 'boolean'
@@ -138,7 +166,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
   }
 
   // Batch update preferences
-  const batchUpdate = (updates: Partial<AppPreferences>) => {
+  const batchUpdate = (updates: Partial<UserPreferences>) => {
     // Update all provided preference values in a single operation
     // This helps prevent multiple watches from firing separately
     if (updates.selectedKyus !== undefined) {

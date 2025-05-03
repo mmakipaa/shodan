@@ -1,53 +1,1162 @@
 {
-  "version": 1,
+  "version": 2,
   "techniques": [
-    {
-      "id": 1,
-      "filename": "jiyuwaza aihanmi katatedori monta.mp3",
-      "category": "jiyuwaza",
-      "attack": "aihanmi katatedori",
-      "aikicircle": 3
-    },
-    {
-      "id": 2,
-      "filename": "suwariwaza shomen uchi sotokaitennage.mp3",
-      "category": "suwariwaza",
-      "attack": "Shomen Uchi",
-      "technique": "sotokaitennage",
-      "aikikai": 1
-    },
-    {
-      "id": 3,
-      "filename": "tachiwaza katadori nikyo.mp3",
-      "category": "tachiwaza",
-      "attack": "katadori",
-      "technique": "nikyo",
-      "aikicircle": 3,
-      "aikikai": 1
-    },
-    {
-      "id": 4,
-      "filename": "tachiwaza morotedori kotegaeshi.mp3",
-      "category": "tachiwaza",
-      "attack": "morotedori",
-      "technique": "kotegaeshi"
-    },
-    {
-      "id": 5,
-      "filename": "tachiwaza shomen uchi nikyo.mp3",
-      "category": "tachiwaza",
-      "attack": "Shomen Uchi",
-      "technique": "nikyo",
-      "aikicircle": 3,
-      "aikikai": 4
-    },
-    {
-      "id": 6,
-      "filename": "tachiwaza_yodan_tsuki_uchikaitennage.mp3",
-      "category": "tachiwaza",
-      "attack": "yodan tsuki",
-      "technique": "uchikaitennage",
-      "aikikai": 1
-    }
-  ]
-} 
+  {
+    "id": 0,
+    "filename": "suwariwaza_katatedori_iriminage.aac",
+    "category": "suwariwaza",
+    "attack": "katatedori",
+    "technique": "iriminage",
+    "aikikai": 2
+  },
+  {
+    "id": 1,
+    "filename": "suwariwaza_katatedori_kotegaeshi.aac",
+    "category": "suwariwaza",
+    "attack": "katatedori",
+    "technique": "kotegaeshi",
+    "aikikai": 2
+  },
+  {
+    "id": 2,
+    "filename": "suwariwaza_katatedori_uchikaitennage.aac",
+    "category": "suwariwaza",
+    "attack": "katatedori",
+    "technique": "uchikaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 3,
+    "filename": "suwariwaza_katatedori_sotokaitennage.aac",
+    "category": "suwariwaza",
+    "attack": "katatedori",
+    "technique": "sotokaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 4,
+    "filename": "suwariwaza_ryotedori_kokyoho.aac",
+    "category": "suwariwaza",
+    "attack": "ryotedori",
+    "technique": "kokyoho",
+    "aikikai": 6,
+    "aikicircle": 6
+  },
+  {
+    "id": 5,
+    "filename": "suwariwaza_katadori_ikkyo.aac",
+    "category": "suwariwaza",
+    "attack": "katadori",
+    "technique": "ikkyo",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 6,
+    "filename": "suwariwaza_katadori_nikyo.aac",
+    "category": "suwariwaza",
+    "attack": "katadori",
+    "technique": "nikyo",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 7,
+    "filename": "suwariwaza_katadori_sankyo.aac",
+    "category": "suwariwaza",
+    "attack": "katadori",
+    "technique": "sankyo",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 8,
+    "filename": "suwariwaza_katadori_yonkyo.aac",
+    "category": "suwariwaza",
+    "attack": "katadori",
+    "technique": "yonkyo",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 9,
+    "filename": "suwariwaza_shomenuchi_ikkyo.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "ikkyo",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 10,
+    "filename": "suwariwaza_shomenuchi_nikyo.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "nikyo",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 11,
+    "filename": "suwariwaza_shomenuchi_sankyo.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "sankyo",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 12,
+    "filename": "suwariwaza_shomenuchi_yonkyo.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "yonkyo",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 13,
+    "filename": "suwariwaza_shomenuchi_iriminage.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "iriminage",
+    "aikikai": 2
+  },
+  {
+    "id": 14,
+    "filename": "suwariwaza_shomenuchi_kotegaeshi.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "kotegaeshi",
+    "aikikai": 2
+  },
+  {
+    "id": 15,
+    "filename": "suwariwaza_shomenuchi_uchikaitennage.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "uchikaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 16,
+    "filename": "suwariwaza_shomenuchi_sotokaitennage.aac",
+    "category": "suwariwaza",
+    "attack": "shomenuchi",
+    "technique": "sotokaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 17,
+    "filename": "suwariwaza_yokomenuchi_ikkyo.aac",
+    "category": "suwariwaza",
+    "attack": "yokomenuchi",
+    "technique": "ikkyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 18,
+    "filename": "suwariwaza_yokomenuchi_nikyo.aac",
+    "category": "suwariwaza",
+    "attack": "yokomenuchi",
+    "technique": "nikyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 19,
+    "filename": "suwariwaza_yokomenuchi_sankyo.aac",
+    "category": "suwariwaza",
+    "attack": "yokomenuchi",
+    "technique": "sankyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 20,
+    "filename": "suwariwaza_yokomenuchi_yonkyo.aac",
+    "category": "suwariwaza",
+    "attack": "yokomenuchi",
+    "technique": "yonkyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 21,
+    "filename": "hanmihandachiwaza_katatedori_ikkyo.aac",
+    "category": "hanmihandachiwaza",
+    "attack": "katatedori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 22,
+    "filename": "hanmihandachiwaza_katatedori_shihonage.aac",
+    "category": "hanmihandachiwaza",
+    "attack": "katatedori",
+    "technique": "shihonage",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 23,
+    "filename": "hanmihandachiwaza_ryotedori_shihonage.aac",
+    "category": "hanmihandachiwaza",
+    "attack": "ryotedori",
+    "technique": "shihonage",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 24,
+    "filename": "hanmihandachiwaza_ryotedori_kokyonage.aac",
+    "category": "hanmihandachiwaza",
+    "attack": "ryotedori",
+    "technique": "kokyonage"
+  },
+  {
+    "id": 25,
+    "filename": "hanmihandachiwaza_shomenuchi_iriminage.aac",
+    "category": "hanmihandachiwaza",
+    "attack": "shomenuchi",
+    "technique": "iriminage"
+  },
+  {
+    "id": 26,
+    "filename": "tachiwaza_aihanmikatatedori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "ikkyo",
+    "aikikai": 6,
+    "aikicircle": 6
+  },
+  {
+    "id": 27,
+    "filename": "tachiwaza_aihanmikatatedori_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "sankyo"
+  },
+  {
+    "id": 28,
+    "filename": "tachiwaza_aihanmikatatedori_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "shihonage",
+    "aikikai": 6,
+    "aikicircle": 6
+  },
+  {
+    "id": 29,
+    "filename": "tachiwaza_aihanmikatatedori_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "iriminage",
+    "aikikai": 6,
+    "aikicircle": 6
+  },
+  {
+    "id": 30,
+    "filename": "tachiwaza_aihanmikatatedori_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "kotegaeshi"
+  },
+  {
+    "id": 31,
+    "filename": "tachiwaza_aihanmikatatedori_koshinage.aac",
+    "category": "tachiwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "koshinage"
+  },
+  {
+    "id": 32,
+    "filename": "tachiwaza_katatedori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "ikkyo",
+    "aikikai": 5
+  },
+  {
+    "id": 33,
+    "filename": "tachiwaza_katatedori_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "nikyo"
+  },
+  {
+    "id": 34,
+    "filename": "tachiwaza_katatedori_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "sankyo"
+  },
+  {
+    "id": 35,
+    "filename": "tachiwaza_katatedori_yonkyo.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "yonkyo"
+  },
+  {
+    "id": 36,
+    "filename": "tachiwaza_katatedori_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "shihonage",
+    "aikikai": 5,
+    "aikicircle": 5
+  },
+  {
+    "id": 37,
+    "filename": "tachiwaza_katatedori_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "iriminage",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 38,
+    "filename": "tachiwaza_katatedori_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "kotegaeshi",
+    "aikikai": 2,
+    "aikicircle": 5
+  },
+  {
+    "id": 39,
+    "filename": "tachiwaza_katatedori_uchikaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "uchikaitennage",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 40,
+    "filename": "tachiwaza_katatedori_sotokaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "sotokaitennage",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 41,
+    "filename": "tachiwaza_katatedori_sotokaitenosae.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "sotokaitenosae"
+  },
+  {
+    "id": 42,
+    "filename": "tachiwaza_katatedori_kokyonage.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "kokyonage"
+  },
+  {
+    "id": 43,
+    "filename": "tachiwaza_katatedori_kokyoho.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "kokyoho"
+  },
+  {
+    "id": 44,
+    "filename": "tachiwaza_katatedori_koshinage.aac",
+    "category": "tachiwaza",
+    "attack": "katatedori",
+    "technique": "koshinage",
+    "aikicircle": 2
+  },
+  {
+    "id": 45,
+    "filename": "tachiwaza_morotedori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "ikkyo",
+    "aikicircle": 2
+  },
+  {
+    "id": 46,
+    "filename": "tachiwaza_morotedori_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "nikyo"
+  },
+  {
+    "id": 47,
+    "filename": "tachiwaza_morotedori_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "iriminage"
+  },
+  {
+    "id": 48,
+    "filename": "tachiwaza_morotedori_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "kotegaeshi"
+  },
+  {
+    "id": 49,
+    "filename": "tachiwaza_morotedori_kokyonage.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "kokyonage",
+    "aikicircle": 2
+  },
+  {
+    "id": 50,
+    "filename": "tachiwaza_morotedori_kokyoho.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "kokyoho",
+    "aikicircle": 2
+  },
+  {
+    "id": 51,
+    "filename": "tachiwaza_morotedori_jujigarami.aac",
+    "category": "tachiwaza",
+    "attack": "morotedori",
+    "technique": "jujigarami",
+    "aikicircle": 2
+  },
+  {
+    "id": 52,
+    "filename": "tachiwaza_ryotedori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "ryotedori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 53,
+    "filename": "tachiwaza_ryotedori_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "ryotedori",
+    "technique": "shihonage",
+    "aikikai": 3,
+    "aikicircle": 4
+  },
+  {
+    "id": 54,
+    "filename": "tachiwaza_ryotedori_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "ryotedori",
+    "technique": "iriminage"
+  },
+  {
+    "id": 55,
+    "filename": "tachiwaza_ryotedori_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "ryotedori",
+    "technique": "kotegaeshi"
+  },
+  {
+    "id": 56,
+    "filename": "tachiwaza_ryotedori_tenchinage.aac",
+    "category": "tachiwaza",
+    "attack": "ryotedori",
+    "technique": "tenchinage",
+    "aikikai": 3,
+    "aikicircle": 5
+  },
+  {
+    "id": 57,
+    "filename": "tachiwaza_ryotedori_kokyonage.aac",
+    "category": "tachiwaza",
+    "attack": "ryotedori",
+    "technique": "kokyonage"
+  },
+  {
+    "id": 58,
+    "filename": "tachiwaza_katadori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "katadori",
+    "technique": "ikkyo",
+    "aikikai": 4,
+    "aikicircle": 4
+  },
+  {
+    "id": 59,
+    "filename": "tachiwaza_katadori_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "katadori",
+    "technique": "nikyo",
+    "aikikai": 4,
+    "aikicircle": 4
+  },
+  {
+    "id": 60,
+    "filename": "tachiwaza_katadori_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "katadori",
+    "technique": "sankyo",
+    "aikikai": 2,
+    "aikicircle": 4
+  },
+  {
+    "id": 61,
+    "filename": "tachiwaza_katadori_yonkyo.aac",
+    "category": "tachiwaza",
+    "attack": "katadori",
+    "technique": "yonkyo",
+    "aikikai": 2,
+    "aikicircle": 4
+  },
+  {
+    "id": 62,
+    "filename": "tachiwaza_munedori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "munedori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 63,
+    "filename": "tachiwaza_munedori_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "munedori",
+    "technique": "nikyo"
+  },
+  {
+    "id": 64,
+    "filename": "tachiwaza_munedori_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "munedori",
+    "technique": "sankyo"
+  },
+  {
+    "id": 65,
+    "filename": "tachiwaza_munedori_yonkyo.aac",
+    "category": "tachiwaza",
+    "attack": "munedori",
+    "technique": "yonkyo"
+  },
+  {
+    "id": 66,
+    "filename": "tachiwaza_ryokatadori_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "ryokatadori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 67,
+    "filename": "tachiwaza_ryokatadori_kokyonage.aac",
+    "category": "tachiwaza",
+    "attack": "ryokatadori",
+    "technique": "kokyonage"
+  },
+  {
+    "id": 68,
+    "filename": "tachiwaza_ryokatadori_kokyoho.aac",
+    "category": "tachiwaza",
+    "attack": "ryokatadori",
+    "technique": "kokyoho"
+  },
+  {
+    "id": 69,
+    "filename": "tachiwaza_ryokatadori_koshinage.aac",
+    "category": "tachiwaza",
+    "attack": "ryokatadori",
+    "technique": "koshinage"
+  },
+  {
+    "id": 70,
+    "filename": "tachiwaza_katadorimenuchi_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "katadorimenuchi",
+    "technique": "ikkyo",
+    "aikicircle": 2
+  },
+  {
+    "id": 71,
+    "filename": "tachiwaza_katadorimenuchi_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "katadorimenuchi",
+    "technique": "nikyo"
+  },
+  {
+    "id": 72,
+    "filename": "tachiwaza_katadorimenuchi_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "katadorimenuchi",
+    "technique": "shihonage"
+  },
+  {
+    "id": 73,
+    "filename": "tachiwaza_katadorimenuchi_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "katadorimenuchi",
+    "technique": "iriminage"
+  },
+  {
+    "id": 74,
+    "filename": "tachiwaza_katadorimenuchi_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "katadorimenuchi",
+    "technique": "kotegaeshi"
+  },
+  {
+    "id": 75,
+    "filename": "tachiwaza_katadorimenuchi_koshinage.aac",
+    "category": "tachiwaza",
+    "attack": "katadorimenuchi",
+    "technique": "koshinage"
+  },
+  {
+    "id": 76,
+    "filename": "tachiwaza_shomenuchi_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "ikkyo",
+    "aikikai": 5,
+    "aikicircle": 6
+  },
+  {
+    "id": 77,
+    "filename": "tachiwaza_shomenuchi_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "nikyo",
+    "aikikai": 4,
+    "aikicircle": 3
+  },
+  {
+    "id": 78,
+    "filename": "tachiwaza_shomenuchi_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "sankyo",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 79,
+    "filename": "tachiwaza_shomenuchi_yonkyo.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "yonkyo",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 80,
+    "filename": "tachiwaza_shomenuchi_gokyo.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "gokyo"
+  },
+  {
+    "id": 81,
+    "filename": "tachiwaza_shomenuchi_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "shihonage"
+  },
+  {
+    "id": 82,
+    "filename": "tachiwaza_shomenuchi_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "iriminage",
+    "aikikai": 5,
+    "aikicircle": 6
+  },
+  {
+    "id": 83,
+    "filename": "tachiwaza_shomenuchi_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "kotegaeshi",
+    "aikikai": 3,
+    "aikicircle": 4
+  },
+  {
+    "id": 84,
+    "filename": "tachiwaza_shomenuchi_uchikaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "uchikaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 85,
+    "filename": "tachiwaza_shomenuchi_sotokaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "sotokaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 86,
+    "filename": "tachiwaza_shomenuchi_uchikaiten_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "shomenuchi",
+    "technique": "uchikaiten sankyo",
+    "aikicircle": 1
+  },
+  {
+    "id": 87,
+    "filename": "tachiwaza_yokomenuchi_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "ikkyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 88,
+    "filename": "tachiwaza_yokomenuchi_nikyo.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "nikyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 89,
+    "filename": "tachiwaza_yokomenuchi_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "sankyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 90,
+    "filename": "tachiwaza_yokomenuchi_yonkyo.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "yonkyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 91,
+    "filename": "tachiwaza_yokomenuchi_gokyo.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "gokyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 92,
+    "filename": "tachiwaza_yokomenuchi_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "shihonage",
+    "aikikai": 4,
+    "aikicircle": 4
+  },
+  {
+    "id": 93,
+    "filename": "tachiwaza_yokomenuchi_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "iriminage"
+  },
+  {
+    "id": 94,
+    "filename": "tachiwaza_yokomenuchi_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "yokomenuchi",
+    "technique": "kotegaeshi"
+  },
+  {
+    "id": 95,
+    "filename": "tachiwaza_chudantsuki_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 96,
+    "filename": "tachiwaza_chudantsuki_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "iriminage",
+    "aikikai": 3,
+    "aikicircle": 2
+  },
+  {
+    "id": 97,
+    "filename": "tachiwaza_chudantsuki_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "kotegaeshi",
+    "aikikai": 3,
+    "aikicircle": 2
+  },
+  {
+    "id": 98,
+    "filename": "tachiwaza_chudantsuki_uchikaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "uchikaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 99,
+    "filename": "tachiwaza_chudantsuki_sotokaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "sotokaitennage",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 100,
+    "filename": "tachiwaza_chudantsuki_uchikaiten_sankyo.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "uchikaiten sankyo"
+  },
+  {
+    "id": 101,
+    "filename": "tachiwaza_chudantsuki_hijikimeosae.aac",
+    "category": "tachiwaza",
+    "attack": "chudantsuki",
+    "technique": "hijikimeosae"
+  },
+  {
+    "id": 102,
+    "filename": "tachiwaza_yodantsuki_ikkyo.aac",
+    "category": "tachiwaza",
+    "attack": "yodantsuki",
+    "technique": "ikkyo",
+    "aikicircle": 3
+  },
+  {
+    "id": 103,
+    "filename": "tachiwaza_yodantsuki_shihonage.aac",
+    "category": "tachiwaza",
+    "attack": "yodantsuki",
+    "technique": "shihonage"
+  },
+  {
+    "id": 104,
+    "filename": "tachiwaza_yodantsuki_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "yodantsuki",
+    "technique": "iriminage",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 105,
+    "filename": "tachiwaza_yodantsuki_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "yodantsuki",
+    "technique": "kotegaeshi",
+    "aikikai": 3,
+    "aikicircle": 3
+  },
+  {
+    "id": 106,
+    "filename": "tachiwaza_yodantsuki_uchikaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "yodantsuki",
+    "technique": "uchikaitennage",
+    "aikikai": 1
+  },
+  {
+    "id": 107,
+    "filename": "tachiwaza_yodantsuki_sotokaitennage.aac",
+    "category": "tachiwaza",
+    "attack": "yodantsuki",
+    "technique": "sotokaitennage",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 108,
+    "filename": "tachiwaza_maegeri_iriminage.aac",
+    "category": "tachiwaza",
+    "attack": "maegeri",
+    "technique": "iriminage",
+    "aikicircle": 1
+  },
+  {
+    "id": 109,
+    "filename": "tachiwaza_maegeri_kotegaeshi.aac",
+    "category": "tachiwaza",
+    "attack": "maegeri",
+    "technique": "kotegaeshi",
+    "aikicircle": 1
+  },
+  {
+    "id": 110,
+    "filename": "tachiwaza_maegeri_kokyoho.aac",
+    "category": "tachiwaza",
+    "attack": "maegeri",
+    "technique": "kokyoho"
+  },
+  {
+    "id": 111,
+    "filename": "ushirowaza_ryotedori_ikkyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "ikkyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 112,
+    "filename": "ushirowaza_ryotedori_nikyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "nikyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 113,
+    "filename": "ushirowaza_ryotedori_sankyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "sankyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 114,
+    "filename": "ushirowaza_ryotedori_yonkyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "yonkyo",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 115,
+    "filename": "ushirowaza_ryotedori_shihonage.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "shihonage"
+  },
+  {
+    "id": 116,
+    "filename": "ushirowaza_ryotedori_iriminage.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "iriminage",
+    "aikicircle": 1
+  },
+  {
+    "id": 117,
+    "filename": "ushirowaza_ryotedori_kotegaeshi.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "kotegaeshi",
+    "aikicircle": 1
+  },
+  {
+    "id": 118,
+    "filename": "ushirowaza_ryotedori_kokyonage.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "kokyonage",
+    "aikicircle": 1
+  },
+  {
+    "id": 119,
+    "filename": "ushirowaza_ryotedori_koshinage.aac",
+    "category": "ushirowaza",
+    "attack": "ryotedori",
+    "technique": "koshinage"
+  },
+  {
+    "id": 120,
+    "filename": "ushirowaza_ryokatadori_ikkyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryokatadori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 121,
+    "filename": "ushirowaza_ryokatadori_kokyonage.aac",
+    "category": "ushirowaza",
+    "attack": "ryokatadori",
+    "technique": "kokyonage",
+    "aikicircle": 1
+  },
+  {
+    "id": 122,
+    "filename": "ushirowaza_ryokatadori_kokyoho.aac",
+    "category": "ushirowaza",
+    "attack": "ryokatadori",
+    "technique": "kokyoho"
+  },
+  {
+    "id": 123,
+    "filename": "ushirowaza_ryokatadori_aikiotoshi.aac",
+    "category": "ushirowaza",
+    "attack": "ryokatadori",
+    "technique": "aikiotoshi"
+  },
+  {
+    "id": 124,
+    "filename": "ushirowaza_ryohijidori_ikkyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 125,
+    "filename": "ushirowaza_ryohijidori_nikyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "nikyo"
+  },
+  {
+    "id": 126,
+    "filename": "ushirowaza_ryohijidori_sankyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "sankyo"
+  },
+  {
+    "id": 127,
+    "filename": "ushirowaza_ryohijidori_yonkyo.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "yonkyo"
+  },
+  {
+    "id": 128,
+    "filename": "ushirowaza_ryohijidori_shihonage.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "shihonage"
+  },
+  {
+    "id": 129,
+    "filename": "ushirowaza_ryohijidori_iriminage.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "iriminage"
+  },
+  {
+    "id": 130,
+    "filename": "ushirowaza_ryohijidori_kokyonage.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "kokyonage"
+  },
+  {
+    "id": 131,
+    "filename": "ushirowaza_ryohijidori_kokyoho.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "kokyoho"
+  },
+  {
+    "id": 132,
+    "filename": "ushirowaza_ryohijidori_aikiotoshi.aac",
+    "category": "ushirowaza",
+    "attack": "ryohijidori",
+    "technique": "aikiotoshi"
+  },
+  {
+    "id": 133,
+    "filename": "ushirowaza_eridori_ikkyo.aac",
+    "category": "ushirowaza",
+    "attack": "eridori",
+    "technique": "ikkyo"
+  },
+  {
+    "id": 134,
+    "filename": "ushirowaza_katatedorikubishime_sankyo.aac",
+    "category": "ushirowaza",
+    "attack": "katatedorikubishime",
+    "technique": "sankyo"
+  },
+  {
+    "id": 135,
+    "filename": "ushirowaza_katatedorikubishime_kokyonage.aac",
+    "category": "ushirowaza",
+    "attack": "katatedorikubishime",
+    "technique": "kokyonage",
+    "aikicircle": 1
+  },
+  {
+    "id": 136,
+    "filename": "ushirowaza_katatedorikubishime_koshinage.aac",
+    "category": "ushirowaza",
+    "attack": "katatedorikubishime",
+    "technique": "koshinage"
+  },
+  {
+    "id": 137,
+    "filename": "jiyuwaza_aihanmikatatedori.aac",
+    "category": "jiyuwaza",
+    "attack": "aihanmikatatedori",
+    "technique": "",
+    "aikicircle": 3
+  },
+  {
+    "id": 138,
+    "filename": "jiyuwaza_katatedori.aac",
+    "category": "jiyuwaza",
+    "attack": "katatedori",
+    "technique": "",
+    "aikikai": 3,
+    "aikicircle": 2
+  },
+  {
+    "id": 139,
+    "filename": "jiyuwaza_morotedori.aac",
+    "category": "jiyuwaza",
+    "attack": "morotedori",
+    "technique": "",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 140,
+    "filename": "jiyuwaza_ryotedori.aac",
+    "category": "jiyuwaza",
+    "attack": "ryotedori",
+    "technique": "",
+    "aikikai": 2
+  },
+  {
+    "id": 141,
+    "filename": "jiyuwaza_ushirowaza_ryotedori.aac",
+    "category": "jiyuwaza",
+    "attack": "ushirowaza ryotedori",
+    "technique": "",
+    "aikikai": 1,
+    "aikicircle": 1
+  },
+  {
+    "id": 142,
+    "filename": "jiyuwaza_shomenuchi.aac",
+    "category": "jiyuwaza",
+    "attack": "shomenuchi",
+    "technique": "",
+    "aikicircle": 3
+  },
+  {
+    "id": 143,
+    "filename": "jiyuwaza_yokomenuchi.aac",
+    "category": "jiyuwaza",
+    "attack": "yokomenuchi",
+    "technique": "",
+    "aikikai": 2,
+    "aikicircle": 2
+  },
+  {
+    "id": 144,
+    "filename": "jiyuwaza_yodantsuki.aac",
+    "category": "jiyuwaza",
+    "attack": "yodantsuki",
+    "technique": "",
+    "aikicircle": 3
+  }
+]
+}
